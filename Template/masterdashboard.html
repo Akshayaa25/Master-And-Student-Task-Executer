@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+</head>
+
+<body>
+    <div class="dashboard">
+        <h2>Master Dashboard</h2>
+        <div class="links">
+            <a href="/">Home</a>
+            <a href="/createTask">Create Task</a>
+            <a href="/taskList">Task List</a>
+            <a href="/studentAnswer">Student Answers</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="content-box">
+        {% if link == 'taskList' %}
+        <div class="container">
+            <header>Task List</header>
+            <table>
+                <th>S.No.</th>
+                <th>Task</th>
+                <th>Result</th>
+                {% for list in mylist %}
+                <tr>
+                    <td> {{forloop.counter}} </td>
+                    <td> {{list.task}} </td>
+                    <td> {{list.result}} </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% elif link == 'studentAnswer' %}
+        <div class="container student-answer">
+            <header>Student Answers</header>
+            <table>
+                <th>S.No.</th>
+                <th>Student Name</th>
+                <th>Task</th>
+                <th>Student Answer</th>
+                <th>Result</th>
+                {% for data in mydata %}
+                <tr>
+                    <td> {{forloop.counter}} </td>
+                    <td> {{data.username}} </td>
+                    <td> {{data.task}} </td>
+                    <td> {{data.answer}} </td>
+                    <td> {{data.result}} </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <div class="container">
+            <header>Create Task</header>
+            <form action="/createTask" method="post">
+                {% csrf_token %}
+                <input type="text" name="task" placeholder="number1(operator(number2()))">
+                <input type="submit" value="Add" class="button">
+            </form>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+
+</html>
